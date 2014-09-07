@@ -30,8 +30,16 @@ angular.module('yokelApp')
         return userPosition;
       });
     };
+    var locateUserForSearch = function(){
+      navigator.geolocation.watchPosition(function(position){
+        var userPosition = position.coords.latitude + '/' + position.coords.longitude;
+        return userPosition;
+      });
+      
+    };
     return {
-      locateUser: locateUser
+      locateUser: locateUser,
+      locateUserForSearch: locateUserForSearch
     };
   })
 
@@ -39,15 +47,14 @@ angular.module('yokelApp')
   .factory('loadSearch', function($http, locate){
     var searchNearby = function(){
       var searchObj = {
-        position: locate.locateUser()
+        position: locate.locateUserForSearch()
       };
       return $http({
         method: 'GET',
-        url: 'api/nearby',
-        data: searchObj
+        url: 'api/nearby/' +  '45/-73'
       }).success(function(businesses){
         return businesses;
-      })
+      });
     };
     return {
       searchNearby: searchNearby

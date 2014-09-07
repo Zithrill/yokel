@@ -22,7 +22,7 @@ var User = function(node){
 User.createUniqueUser = function(data){
   return new Promise(function(resolve, reject){
     if(!data.facebookID || !data.name){
-      reject('Requires facebook ID and name parameters');
+      reject('Requires facebook ID and name parameters ' + data.facebookID + " " +  data.name);
     }
 
     var query = [
@@ -105,7 +105,7 @@ var chooseTypes = function(relationshipType){
     idType = 'reviewID';
     thingType = 'Review';
   } else if(relationshipType === 'ISLOCAL'){
-    idType = 'placeID';
+    idType = 'place_id';
     thingType= 'Place';
   }
   return [thingType, idType];
